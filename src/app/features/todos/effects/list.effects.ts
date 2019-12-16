@@ -6,10 +6,14 @@ import { TodoEntity } from '../reducers/list.reducer';
 import { environment } from '../../../../environments/environment';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
+import * as io from 'socket.io-client';
+import { Store } from '@ngrx/store';
+import { TodosState } from '../reducers';
 
 @Injectable()
 export class ListEffects {
 
+  private socket;
   addItem$ = createEffect(() =>
     this.actions$.pipe(
       ofType(listActions.listItemAdded),
@@ -34,5 +38,19 @@ export class ListEffects {
     )
     , { dispatch: true });
 
-  constructor(private actions$: Actions, private client: HttpClient) { }
+  constructor(private actions$: Actions, private client: HttpClient, private store: Store<TodosState>) {
+    this.connectWs();
+  }
+
+  connectWs() {
+    this.socket = io(environment.todosWsUrl);
+
+    this.socket.on('connect', () => {
+      console.log('Connected to the Web Socket Server');
+    });
+
+    this.socket.on('todo-added', (data: TodoEntity) => {
+      this.store.dispatch(listActions.gotTodoFromWebSocket({ payload: data }));
+    });
+  }
 }
