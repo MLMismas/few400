@@ -1,4 +1,5 @@
-import { Action, createReducer } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
+import * as actions from '../actions/user.actions';
 
 export interface UserState {
   name: string;
@@ -15,5 +16,8 @@ export function reducer(state: UserState = initialState, action: Action): UserSt
 }
 
 const myReducer = createReducer(
-  initialState
+  initialState,
+  on(actions.loginRequestSuccessed, (state, action) => ({ name: action.username, isLoggedIn: true })),
+  on(actions.loginRequestFailed, (state, action) => initialState),
+  on(actions.logoutRequested, () => initialState)
 );

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TodosState, selectAllTodos } from './reducers';
-import { listItemAdded } from './actions/list.actions';
+import { listItemAdded, loadListData } from './actions/list.actions';
 import { Observable } from 'rxjs';
 import { TodoEntity } from './reducers/list.reducer';
 
@@ -25,6 +25,10 @@ export class TodosComponent implements OnInit {
     this.store.dispatch(listItemAdded({ description }));
     what.value = '';
     what.focus();
+  }
+
+  load() {
+    this.store.dispatch(loadListData());
   }
 
 }
