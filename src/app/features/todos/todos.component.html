@@ -1,0 +1,15 @@
+<div class="form-group">
+  <label for="item">Item</label>
+  <input id="item"
+         class="form-control"
+         #item>
+  <input type="button"
+         (click)="add(item)"
+         value="Add"
+         class="btn btn-primary">
+</div>
+<section>
+  <ul class="list-unstyled">
+    <li class="alert alert-info">Description</li>
+  </ul>
+</section>
