@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { map, switchMap, catchError, tap, filter } from 'rxjs/operators';
 import { of } from 'rxjs/internal/observable/of';
 import * as appActions from '../../../actions/app.actions';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class LoginEffects {
@@ -23,7 +24,8 @@ export class LoginEffects {
   removeToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(userActions.loginRequestFailed, userActions.logoutRequested),
-      tap(() => localStorage.setItem('token', ''))
+      tap(() => localStorage.setItem('token', '')),
+      tap(() => this.router.navigate(['../']))
     ), { dispatch: false }
   );
 
@@ -48,7 +50,7 @@ export class LoginEffects {
     )
     , { dispatch: true });
 
-  constructor(private actions$: Actions, private client: HttpClient) { }
+  constructor(private actions$: Actions, private client: HttpClient, private router: Router) { }
 }
 
 function extractUserDataFromJwt(token: string): { username: string, token: string } {

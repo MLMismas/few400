@@ -6,6 +6,7 @@ import { featureName, reducers } from './reducers';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { LoginEffects } from './effects/login.effects';
+import { AuthService } from './services/auth.service';
 
 
 
@@ -19,4 +20,11 @@ import { LoginEffects } from './effects/login.effects';
   ],
   exports: [LoginComponent]
 })
-export class AuthModule { }
+export class AuthModule {
+  static forRoot() {
+    return {
+      ngModule: AuthModule,
+      providers: [AuthService]
+    };
+  }
+}

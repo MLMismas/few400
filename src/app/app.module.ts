@@ -10,10 +10,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthModule } from './features/auth/auth.module';
 import { EffectsModule } from '@ngrx/effects';
 import { httpInterceptorProviders } from './interceptors';
+import { AuthGuard } from './auth.guard';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './custom.serializer';
+import { CustomersComponent } from './components/customers/customers.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CustomersComponent
   ],
   imports: [
     BrowserModule,
@@ -21,10 +26,13 @@ import { httpInterceptorProviders } from './interceptors';
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot([]),
-    AuthModule,
-    TodosModule
+    AuthModule.forRoot(), // IMPORTANT!!!
+    TodosModule,
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer
+    })
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
