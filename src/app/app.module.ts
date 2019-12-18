@@ -29,7 +29,8 @@ import { CustomersComponent } from './components/customers/customers.component';
     AuthModule.forRoot(), // IMPORTANT!!!
     TodosModule,
     StoreRouterConnectingModule.forRoot({
-      serializer: CustomSerializer
+      // serializer: CustomSerializer
+      stateKey: 'router'
     })
   ],
   providers: [httpInterceptorProviders, AuthGuard],
