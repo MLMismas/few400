@@ -15,8 +15,8 @@
          (click)="load()">
   <ul class="list-unstyled">
     <li class="alert alert-info"
-        *ngFor="let todo of list$ | async">
-      {{todo.description}}
+        *ngFor="let todo of list$ | async; index as i">
+      <span [attr.data-todo-item]="i">{{todo.description}}</span>
     </li>
   </ul>
 </section>

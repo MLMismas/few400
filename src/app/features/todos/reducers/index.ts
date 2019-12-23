@@ -25,4 +25,4 @@ const { selectAll: selectArrayOfTodos } = fromList.adapter.getSelectors(selectLi
 
 // TODO for our TodosCompoent we need a list of todo items.
 
-export const selectAllTodos = selectArrayOfTodos; // not using a model. A bit weak.
+export const selectAllTodos = createSelector(selectArrayOfTodos, a => a); // selectArrayOfTodos; // not using a model. A bit weak.
